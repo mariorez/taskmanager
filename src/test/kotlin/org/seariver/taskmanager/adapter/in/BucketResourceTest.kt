@@ -1,16 +1,15 @@
 package org.seariver.taskmanager.adapter.`in`
 
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import java.util.*
 import kotlin.random.Random
 
-@WebMvcTest
-class BucketResourceTest(@Autowired val mockMvc: MockMvc) {
+@SpringBootTest
+class BucketResourceTest(val mockMvc: MockMvc) {
 
     @Test
     fun `GIVEN a valid bucket payload MUST return Bucket created`() {
