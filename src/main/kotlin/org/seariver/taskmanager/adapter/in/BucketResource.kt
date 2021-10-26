@@ -7,22 +7,24 @@ import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
-@RestController("v1/buckets")
+@RestController
+@RequestMapping("/v1/buckets")
 class BucketResource(
     val createBucketHandler: CreateBucketHandler
 ) {
 
     @PostMapping
-    fun create(@RequestBody payload: BucketInput): ResponseEntity<Void> {
+    fun create(@RequestBody request: BucketRequest): ResponseEntity<Void> {
 
         createBucketHandler.handle(
             CreateBucketCommand(
-                UUID.fromString(payload.externalId),
-                payload.position,
-                Name(payload.name)
+                UUID.fromString(request.id),
+                request.position,
+                Name(request.name)
             )
         )
 
@@ -30,8 +32,8 @@ class BucketResource(
     }
 }
 
-data class BucketInput(
-    val externalId: String,
+data class BucketRequest(
+    val id: String,
     val position: Double,
     val name: String
 )

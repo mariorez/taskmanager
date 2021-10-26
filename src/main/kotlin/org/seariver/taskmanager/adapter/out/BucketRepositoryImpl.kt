@@ -4,11 +4,11 @@ import org.seariver.taskmanager.application.domain.Bucket
 import org.seariver.taskmanager.application.domain.Name
 import org.seariver.taskmanager.application.port.out.BucketRepository
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Service
 import java.util.*
 import javax.sql.DataSource
 
-@Repository
+@Service
 class BucketRepositoryImpl(
     datasource: DataSource
 ) : BucketRepository {
@@ -16,8 +16,6 @@ class BucketRepositoryImpl(
     private val jdbcTemplate = NamedParameterJdbcTemplate(datasource)
 
     override fun create(bucket: Bucket) {
-
-        var result: Bucket? = null
 
         val sql = """
             INSERT INTO bucket(external_id, position, name)

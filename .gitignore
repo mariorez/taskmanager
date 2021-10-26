@@ -3,6 +3,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### H2 DB ###
+*.db
+
 ### STS ###
 .apt_generated
 .classpath

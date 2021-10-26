@@ -5,7 +5,7 @@ import java.util.*
 
 interface BucketRepository {
 
-    fun create(capture: Bucket)
+    fun create(bucket: Bucket)
 
     fun findByExternalId(externalId: UUID): Bucket?
 }
