@@ -3,7 +3,6 @@ package org.seariver.taskmanager.adapter.out
 import helper.DataSourceHelper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.seariver.taskmanager.application.domain.Bucket
 import org.seariver.taskmanager.application.domain.Name
@@ -14,9 +13,7 @@ import kotlin.random.Random
 
 class BucketRepositoryImplTest {
 
-    companion object {
-        private val dataSource = DataSourceHelper()
-    }
+    private val dataSource = DataSourceHelper()
 
     @Test
     fun `BucketRepositoryImpl MUST implement BucketRepository interface`() {
