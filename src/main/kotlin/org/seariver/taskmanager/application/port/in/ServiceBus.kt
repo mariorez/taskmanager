@@ -21,7 +21,7 @@ class ServiceBus(
             event.exception = exception
             throw exception
         } finally {
-            doObserve(event)
+            observe(event)
             eventPublisher.publishEvent(event)
         }
     }
@@ -36,7 +36,7 @@ class ServiceBus(
         (context.getBean(canonicalEvent) as Handler<Event>).handle(event)
     }
 
-    private fun doObserve(event: Event) {
+    private fun observe(event: Event) {
 
         val message = mutableMapOf(
             "eventName" to event.eventName,
@@ -44,8 +44,8 @@ class ServiceBus(
         )
 
         when (event.exception) {
-            null -> logger.info(message.toString())
-            else -> logger.error(message.toString(), event.exception)
+            null -> if (logger.isInfoEnabled) logger.info(message.toString())
+            else -> if (logger.isErrorEnabled) logger.error(message.toString(), event.exception)
         }
     }
 }
