@@ -18,7 +18,7 @@ class BucketRepositoryImplTest {
 
     @TempDir
     @JvmField
-    var storagePath: Path = Paths.get("storage_test_unit")
+    var storagePath: Path = Paths.get("storage/test/unit")
 
     @Test
     fun `BucketRepositoryImpl MUST implement BucketRepository interface`() {
