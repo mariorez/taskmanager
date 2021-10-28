@@ -12,7 +12,7 @@ class CreateBucketHandler(
     fun handle(command: CreateBucketCommand) {
         repository.create(
             Bucket(
-                externalId = command.externalId,
+                id = command.id,
                 position = command.position,
                 name = command.name
             )

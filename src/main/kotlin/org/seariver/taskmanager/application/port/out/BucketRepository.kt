@@ -7,5 +7,5 @@ interface BucketRepository {
 
     fun create(bucket: Bucket)
 
-    fun findByExternalId(externalId: UUID): Bucket?
+    fun findById(id: UUID): Bucket?
 }

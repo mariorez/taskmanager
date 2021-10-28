@@ -17,20 +17,19 @@ class CreateBucketHandlerTest {
     fun `GIVEN a valid data WHEN creating bucket MUST persist in Database`() {
 
         // given
-        val externalId = UUID.randomUUID()
+        val id = UUID.randomUUID()
         val position = Random.nextDouble()
         val name = Name("TODO")
-        val command = CreateBucketCommand(externalId, position, name)
+        val command = CreateBucketCommand(id, position, name)
         val repository = mock<BucketRepository>()
 
         // when
-        CreateBucketHandler(repository)
-            .handle(command)
+        CreateBucketHandler(repository).handle(command)
 
         // then
         argumentCaptor<Bucket>().apply {
             verify(repository).create(capture())
-            assertThat(firstValue.externalId).isEqualTo(externalId)
+            assertThat(firstValue.id).isEqualTo(id)
             assertThat(firstValue.position).isEqualTo(position)
             assertThat(firstValue.name).isEqualTo(name)
         }

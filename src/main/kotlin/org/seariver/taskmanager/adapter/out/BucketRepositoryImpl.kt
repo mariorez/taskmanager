@@ -1,57 +1,52 @@
 package org.seariver.taskmanager.adapter.out
 
+import one.microstream.reference.Lazy
+import one.microstream.storage.embedded.types.EmbeddedStorageManager
 import org.seariver.taskmanager.application.domain.Bucket
-import org.seariver.taskmanager.application.domain.Name
 import org.seariver.taskmanager.application.port.out.BucketRepository
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
 import java.util.*
-import javax.sql.DataSource
 
 @Service
 class BucketRepositoryImpl(
-    datasource: DataSource
+    private val storageManager: EmbeddedStorageManager
 ) : BucketRepository {
 
-    private val jdbcTemplate = NamedParameterJdbcTemplate(datasource)
-
-    override fun create(bucket: Bucket) {
-
-        val sql = """
-            INSERT INTO bucket(external_id, position, name)
-            values (:externalId, :position, :name)
-            """
-
-        val params = mapOf(
-            "externalId" to bucket.externalId,
-            "position" to bucket.position,
-            "name" to bucket.name.value
-        )
-
-        jdbcTemplate.update(sql, params)
+    init {
+        if (storageManager.root() == null) {
+            storageManager.setRoot(BucketRoot())
+            storageManager.storeRoot()
+        }
     }
 
-    override fun findByExternalId(externalId: UUID): Bucket? {
+    override fun create(bucket: Bucket) {
+        val bucketRoot = storageManager.root() as BucketRoot
+        bucketRoot.add(bucket)
+        storageManager.store(bucketRoot.getAll())
+    }
 
-        var result: Bucket? = null
+    override fun findById(id: UUID): Bucket? {
+        val bucketRoot = storageManager.root() as BucketRoot
+        return bucketRoot.get(id)
+    }
+}
 
-        val sql = """
-            SELECT id, external_id, position, name
-            FROM bucket
-            WHERE external_id = :externalId
-            """
+class BucketRoot {
 
-        val params = mapOf("externalId" to externalId)
+    private var bucketCollection: Lazy<MutableMap<UUID, Bucket>>? = null
 
-        jdbcTemplate.query(sql, params) {
-            result = Bucket(
-                it.getInt("id"),
-                UUID.fromString(it.getString("external_id")),
-                it.getDouble("position"),
-                Name(it.getString("name"))
-            )
-        }
+    fun getAll(): MutableMap<UUID, Bucket> {
+        if (Lazy.get(bucketCollection) == null)
+            bucketCollection = Lazy.Reference(mutableMapOf())
 
-        return result
+        return Lazy.get(bucketCollection)
+    }
+
+    fun get(id: UUID): Bucket? {
+        return getAll().getOrDefault(id, null)
+    }
+
+    fun add(bucket: Bucket) {
+        getAll()[bucket.id] = bucket
     }
 }

@@ -3,8 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### H2 DB ###
-*.db
+### MICROSTREAM ###
+storage*
 
 ### STS ###
 .apt_generated
