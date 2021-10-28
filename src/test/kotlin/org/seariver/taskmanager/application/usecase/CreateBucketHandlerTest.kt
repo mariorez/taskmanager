@@ -6,7 +6,7 @@ import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.seariver.taskmanager.application.domain.Bucket
-import org.seariver.taskmanager.application.domain.Name
+import org.seariver.taskmanager.application.domain.Title
 import org.seariver.taskmanager.application.port.out.BucketRepository
 import java.util.*
 import kotlin.random.Random
@@ -19,8 +19,8 @@ class CreateBucketHandlerTest {
         // given
         val externalId = UUID.randomUUID()
         val position = Random.nextDouble()
-        val name = Name("TODO")
-        val command = CreateBucketCommand(externalId, position, name)
+        val title = Title("TODO")
+        val command = CreateBucketCommand(externalId, position, title)
         val repository = mock<BucketRepository>()
 
         // when
@@ -31,7 +31,7 @@ class CreateBucketHandlerTest {
             verify(repository).create(capture())
             assertThat(firstValue.externalId).isEqualTo(externalId)
             assertThat(firstValue.position).isEqualTo(position)
-            assertThat(firstValue.name).isEqualTo(name)
+            assertThat(firstValue.title).isEqualTo(title)
         }
     }
 }

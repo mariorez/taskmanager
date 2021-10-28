@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.seariver.taskmanager.application.domain.Bucket
-import org.seariver.taskmanager.application.domain.Name
+import org.seariver.taskmanager.application.domain.Title
 import org.seariver.taskmanager.application.port.out.BucketRepository
 import java.util.*
 import javax.sql.DataSource
@@ -28,7 +28,7 @@ class BucketRepositoryImplTest {
         val bucket = Bucket(
             externalId = UUID.randomUUID(),
             position = Random.nextDouble(),
-            name = Name("Todo")
+            title = Title("Todo")
         )
 
         // when
@@ -40,7 +40,7 @@ class BucketRepositoryImplTest {
         assertThat(actualBucket).isNotNull
         actualBucket?.apply {
             assertThat(position).isEqualTo(bucket.position)
-            assertThat(name.toString()).isEqualTo(bucket.name.toString())
+            assertThat(title.toString()).isEqualTo(bucket.title.toString())
         }
     }
 }

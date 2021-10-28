@@ -6,7 +6,5 @@ class Bucket(
     val id: Int? = null,
     val externalId: UUID,
     val position: Double,
-    val name: Name
+    val title: Title
 )
-
-

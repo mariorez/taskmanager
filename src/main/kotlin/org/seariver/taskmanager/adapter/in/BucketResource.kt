@@ -1,6 +1,6 @@
 package org.seariver.taskmanager.adapter.`in`
 
-import org.seariver.taskmanager.application.domain.Name
+import org.seariver.taskmanager.application.domain.Title
 import org.seariver.taskmanager.application.port.`in`.ServiceBus
 import org.seariver.taskmanager.application.usecase.CreateBucketCommand
 import org.springframework.http.HttpStatus.CREATED
@@ -24,7 +24,7 @@ class BucketResource(
             CreateBucketCommand(
                 UUID.fromString(request.id),
                 request.position,
-                Name(request.name)
+                Title(request.title)
             )
         )
 
@@ -35,5 +35,5 @@ class BucketResource(
 data class BucketRequest(
     val id: String,
     val position: Double,
-    val name: String
+    val title: String
 )

@@ -15,7 +15,7 @@ class CreateBucketHandler(
             Bucket(
                 externalId = event.externalId,
                 position = event.position,
-                name = event.name
+                title = event.title
             )
         )
     }
