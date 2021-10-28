@@ -22,7 +22,7 @@ open class MetricsListener(
             )
             .tag(
                 "result",
-                if (event.exception == null) "success" else "failure",
+                if (event.exception == null) "success" else "error",
             )
             .register(meterRegistry)
             .increment()

@@ -28,12 +28,12 @@ class ServiceBus(
 
     private fun run(event: Event) {
 
-        val canonicalEvent = event.eventName
+        val beanName = event.eventName
             .replace("Command", "Handler")
             .replace("Query", "Handler")
             .replaceFirstChar { it.lowercase() }
 
-        (context.getBean(canonicalEvent) as Handler<Event>).handle(event)
+        (context.getBean(beanName) as Handler<Event>).handle(event)
     }
 
     private fun observe(event: Event) {

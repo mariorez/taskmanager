@@ -10,12 +10,12 @@ class CreateBucketHandler(
     private val repository: BucketRepository
 ) : Handler<CreateBucketCommand> {
 
-    override fun handle(command: CreateBucketCommand) {
+    override fun handle(event: CreateBucketCommand) {
         repository.create(
             Bucket(
-                id = command.id,
-                position = command.position,
-                name = command.name
+                id = event.id,
+                position = event.position,
+                name = event.name
             )
         )
     }
