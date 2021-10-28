@@ -1,8 +1,8 @@
 package org.seariver.taskmanager.adapter.`in`
 
 import org.seariver.taskmanager.application.domain.Name
+import org.seariver.taskmanager.application.port.`in`.ServiceBus
 import org.seariver.taskmanager.application.usecase.CreateBucketCommand
-import org.seariver.taskmanager.application.usecase.CreateBucketHandler
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -14,13 +14,13 @@ import java.util.*
 @RestController
 @RequestMapping("/v1/buckets")
 class BucketResource(
-    val createBucketHandler: CreateBucketHandler
+    val serviceBus: ServiceBus
 ) {
 
     @PostMapping
     fun create(@RequestBody request: BucketRequest): ResponseEntity<Void> {
 
-        createBucketHandler.handle(
+        serviceBus.execute(
             CreateBucketCommand(
                 UUID.fromString(request.id),
                 request.position,
