@@ -24,8 +24,7 @@ class CreateBucketHandlerTest {
         val repository = mock<BucketRepository>()
 
         // when
-        CreateBucketHandler(repository)
-            .handle(command)
+        CreateBucketHandler(repository).handle(command)
 
         // then
         argumentCaptor<Bucket>().apply {
