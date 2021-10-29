@@ -1,6 +1,6 @@
 package org.seariver.taskmanager.application.domain
 
-import org.seariver.taskmanager.application.SelfValidating
+import org.seariver.taskmanager.application.util.SelfValidating
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 

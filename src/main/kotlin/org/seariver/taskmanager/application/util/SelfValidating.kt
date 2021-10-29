@@ -1,4 +1,4 @@
-package org.seariver.taskmanager.application
+package org.seariver.taskmanager.application.util
 
 import javax.validation.ConstraintViolationException
 import javax.validation.Validation

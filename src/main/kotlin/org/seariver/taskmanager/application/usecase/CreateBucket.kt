@@ -1,8 +1,8 @@
 package org.seariver.taskmanager.application.usecase
 
-import org.seariver.taskmanager.application.SelfValidating
-import org.seariver.taskmanager.application.SelfValidating.Companion.INVALID_UUID
-import org.seariver.taskmanager.application.SelfValidating.Companion.UUID_FORMAT
+import org.seariver.taskmanager.application.util.SelfValidating
+import org.seariver.taskmanager.application.util.SelfValidating.Companion.INVALID_UUID
+import org.seariver.taskmanager.application.util.SelfValidating.Companion.UUID_FORMAT
 import org.seariver.taskmanager.application.domain.Title
 import org.seariver.taskmanager.application.port.`in`.Event
 import javax.validation.constraints.NotBlank

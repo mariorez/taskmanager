@@ -6,12 +6,12 @@ import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 
 @Service
-class ServiceBus(
+class EventBus(
     private val context: ApplicationContext,
     private val eventPublisher: ApplicationEventPublisher
 ) {
     companion object {
-        private val logger = LoggerFactory.getLogger(ServiceBus::class.java)
+        private val logger = LoggerFactory.getLogger(EventBus::class.java)
     }
 
     fun execute(event: Event) {
@@ -39,8 +39,7 @@ class ServiceBus(
         when (event.exception) {
             null -> if (logger.isInfoEnabled) logger.info(message)
             else -> if (logger.isErrorEnabled) logger.error(
-                "$message, error: {}",
-                event.exception!!.message,
+                "$message, error: ${event.exception!!.message}",
                 event.exception
             )
         }
