@@ -47,7 +47,7 @@ class BucketResourceIT(
     @ParameterizedTest
     @MethodSource("provideInvalidData")
     fun `GIVEN invalid data MUST return bad request`(
-        externalId: UUID,
+        externalId: String,
         title: String,
         errorsFields: Array<String>,
         errorsDetails: Array<String>
@@ -71,22 +71,26 @@ class BucketResourceIT(
             jsonPath("$.message", `is`("Invalid data"))
             jsonPath("$.errors[*].field", containsInAnyOrder(*errorsFields))
             jsonPath("$.errors[*].detail", containsInAnyOrder(*errorsDetails))
-        }.andDo { print() }
+        }
     }
 
     companion object {
         @JvmStatic
         fun provideInvalidData(): Stream<Arguments> {
 
-            val validUUID = UUID.randomUUID()
+            val validUUID = UUID.randomUUID().toString()
             val validTitle = "1.1) TODO"
 
             // error messages
             val notBlank = "must not be blank"
             val invalidSize = "size must be between 1 and 100"
+            val invalidIdFormat = "invalid UUID format"
 
             return Stream.of(
-                //Arguments.of("", validTitle),
+                // ID validations
+                Arguments.of("", validTitle, arrayOf("id", "id"), arrayOf(invalidIdFormat, notBlank)),
+                Arguments.of("bla", validTitle, arrayOf("id"), arrayOf(invalidIdFormat)),
+                // Title validations
                 Arguments.of(validUUID, "", arrayOf("title", "title"), arrayOf(notBlank, invalidSize)),
                 Arguments.of(validUUID, " ", arrayOf("title"), arrayOf(notBlank)),
                 Arguments.of(validUUID, "not > 100".repeat(12), arrayOf("title"), arrayOf(invalidSize))

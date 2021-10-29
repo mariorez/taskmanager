@@ -20,7 +20,7 @@ class CreateBucketHandlerTest {
         val externalId = UUID.randomUUID()
         val position = Random.nextDouble()
         val title = Title("TODO")
-        val event = CreateBucket(externalId, position, title)
+        val event = CreateBucket(externalId.toString(), position, title)
         val repository = mock<BucketRepository>()
 
         // when
