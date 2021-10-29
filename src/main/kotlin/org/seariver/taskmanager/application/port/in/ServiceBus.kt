@@ -27,26 +27,22 @@ class ServiceBus(
     }
 
     private fun run(event: Event) {
-
-        val beanName = event.eventName
-            .replace("Command", "Handler")
-            .replace("Query", "Handler")
-            .replaceFirstChar { it.lowercase() }
-
+        val beanName = "${event.eventName.replaceFirstChar { it.lowercase() }}Handler"
         @Suppress("UNCHECKED_CAST")
         (context.getBean(beanName) as Handler<Event>).handle(event)
     }
 
     private fun observe(event: Event) {
 
-        val message = mutableMapOf(
-            "eventName" to event.eventName,
-            "eventData" to event.sanitizedData()
-        )
+        val message = "eventName: ${event.eventName}, eventData: ${event.sanitizedData()}"
 
         when (event.exception) {
-            null -> if (logger.isInfoEnabled) logger.info(message.toString())
-            else -> if (logger.isErrorEnabled) logger.error(message.toString(), event.exception)
+            null -> if (logger.isInfoEnabled) logger.info(message)
+            else -> if (logger.isErrorEnabled) logger.error(
+                "$message, error: {}",
+                event.exception!!.message,
+                event.exception
+            )
         }
     }
 }

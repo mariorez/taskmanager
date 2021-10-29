@@ -4,7 +4,7 @@ import org.seariver.taskmanager.application.domain.Title
 import org.seariver.taskmanager.application.port.`in`.Event
 import java.util.*
 
-data class CreateBucketCommand(
+data class CreateBucket(
     val externalId: UUID,
     val position: Double,
     val title: Title

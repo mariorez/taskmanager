@@ -17,10 +17,6 @@ open class MetricsListener(
     open fun onAnyEvent(event: Event) {
         Counter.builder(event.eventName)
             .tag(
-                "type",
-                if (event.eventName.indexOf("Command") != -1) "stateful" else "stateless"
-            )
-            .tag(
                 "result",
                 if (event.exception == null) "success" else "error",
             )

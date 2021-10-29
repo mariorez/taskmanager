@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service
 @Service
 class CreateBucketHandler(
     private val repository: BucketRepository
-) : Handler<CreateBucketCommand> {
+) : Handler<CreateBucket> {
 
-    override fun handle(event: CreateBucketCommand) {
+    override fun handle(event: CreateBucket) {
         repository.create(
             Bucket(
                 externalId = event.externalId,

@@ -20,11 +20,11 @@ class CreateBucketHandlerTest {
         val externalId = UUID.randomUUID()
         val position = Random.nextDouble()
         val title = Title("TODO")
-        val command = CreateBucketCommand(externalId, position, title)
+        val event = CreateBucket(externalId, position, title)
         val repository = mock<BucketRepository>()
 
         // when
-        CreateBucketHandler(repository).handle(command)
+        CreateBucketHandler(repository).handle(event)
 
         // then
         argumentCaptor<Bucket>().apply {
