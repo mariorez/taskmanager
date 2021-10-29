@@ -1,10 +1,10 @@
 package org.seariver.taskmanager.application.usecase
 
+import org.seariver.taskmanager.application.domain.Title
+import org.seariver.taskmanager.application.port.`in`.Event
 import org.seariver.taskmanager.application.util.SelfValidating
 import org.seariver.taskmanager.application.util.SelfValidating.Companion.INVALID_UUID
 import org.seariver.taskmanager.application.util.SelfValidating.Companion.UUID_FORMAT
-import org.seariver.taskmanager.application.domain.Title
-import org.seariver.taskmanager.application.port.`in`.Event
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 
@@ -22,7 +22,7 @@ data class CreateBucket(
 
     override fun sanitizedData(): Map<String, Any> {
         return mapOf(
-            "externalId" to id,
+            "id" to id,
             "position" to position,
             "title" to title.title
         )

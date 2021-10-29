@@ -18,7 +18,7 @@ import kotlin.random.Random
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class BucketResourceIT(
+class BucketResourceTest(
     @Autowired val mockMvc: MockMvc
 ) {
 
@@ -26,11 +26,11 @@ class BucketResourceIT(
     fun `GIVEN a valid payload MUST create a bucket successfully`() {
 
         // given
-        val externalId = UUID.randomUUID()
+        val id = UUID.randomUUID()
         val position = Random.nextDouble()
         val title = "1.2 - TODO"
         val payload = """{
-            "id": "$externalId",
+            "id": "$id",
             "position": $position,
             "title": "$title"
         }"""
@@ -47,7 +47,7 @@ class BucketResourceIT(
     @ParameterizedTest
     @MethodSource("provideInvalidData")
     fun `GIVEN invalid data MUST return bad request`(
-        externalId: String,
+        id: String,
         title: String,
         errorsFields: Array<String>,
         errorsDetails: Array<String>
@@ -55,7 +55,7 @@ class BucketResourceIT(
         // given
         val position = Random.nextDouble()
         val payload = """{
-            "id": "$externalId",
+            "id": "$id",
             "position": $position,
             "title": "$title"
         }"""
