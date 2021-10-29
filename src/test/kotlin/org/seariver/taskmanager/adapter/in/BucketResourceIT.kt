@@ -1,5 +1,7 @@
 package org.seariver.taskmanager.adapter.`in`
 
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -46,7 +48,9 @@ class BucketResourceIT(
     @MethodSource("provideInvalidData")
     fun `GIVEN invalid data MUST return bad request`(
         externalId: UUID,
-        title: String
+        title: String,
+        errorsFields: Array<String>,
+        errorsDetails: Array<String>
     ) {
         // given
         val position = Random.nextDouble()
@@ -62,9 +66,12 @@ class BucketResourceIT(
             content = payload
         }.andExpect {
             status { isBadRequest() }
-        }.andDo {
-            print()
-        }
+            content { contentType(APPLICATION_JSON) }
+        }.andExpect {
+            jsonPath("$.message", `is`("Invalid data"))
+            jsonPath("$.errors[*].field", containsInAnyOrder(*errorsFields))
+            jsonPath("$.errors[*].detail", containsInAnyOrder(*errorsDetails))
+        }.andDo { print() }
     }
 
     companion object {
@@ -74,11 +81,15 @@ class BucketResourceIT(
             val validUUID = UUID.randomUUID()
             val validTitle = "1.1) TODO"
 
+            // error messages
+            val notBlank = "must not be blank"
+            val invalidSize = "size must be between 1 and 100"
+
             return Stream.of(
                 //Arguments.of("", validTitle),
-                Arguments.of(validUUID, ""),
-                Arguments.of(validUUID, " "),
-                Arguments.of(validUUID, "cannot be greater than hundred chars".repeat(3))
+                Arguments.of(validUUID, "", arrayOf("title", "title"), arrayOf(notBlank, invalidSize)),
+                Arguments.of(validUUID, " ", arrayOf("title"), arrayOf(notBlank)),
+                Arguments.of(validUUID, "not > 100".repeat(12), arrayOf("title"), arrayOf(invalidSize))
             )
         }
     }
