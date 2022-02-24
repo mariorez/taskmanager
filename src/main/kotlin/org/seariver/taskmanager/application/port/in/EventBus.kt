@@ -10,9 +10,8 @@ class EventBus(
     private val context: ApplicationContext,
     private val eventPublisher: ApplicationEventPublisher
 ) {
-    companion object {
-        private val logger = LoggerFactory.getLogger(EventBus::class.java)
-    }
+
+    private val logger = LoggerFactory.getLogger(EventBus::class.java)
 
     fun execute(event: Event) {
         try {
